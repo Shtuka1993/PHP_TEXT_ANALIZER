@@ -1,5 +1,5 @@
 <?php
-    require("");
+    require("TextAnalizer.php");
 ?>
 
 <html>
@@ -8,8 +8,9 @@
     </head>
     <body>
         <form method="post" action="">
-            <textarea required name="text"></textarea><br>
+            <textarea name="text"></textarea><br>
             <input type="submit" value="SEND"><br>
+            <input type="file" name="file" id="file">
         </form>
             <?php
                 if(isset($_POST['text'])) {
