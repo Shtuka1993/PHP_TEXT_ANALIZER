@@ -6,15 +6,15 @@
  */
 function isPalindrome(string $text):bool
 {
-    $i=0;
+    $iterator=0;
     $length = mb_strlen($text);
     $iterations = (int)($length/2);
     $length--;
-    while ($iterations>$i) {
-        if ($text[$i] !== $text[$length-$i]) {
+    while ($iterations>$iterator) {
+        if ($text[$iterator] !== $text[$length-$iterator]) {
             return false;
         }
-        $i++;
+        $iterator++;
     }
     return true;
 }
