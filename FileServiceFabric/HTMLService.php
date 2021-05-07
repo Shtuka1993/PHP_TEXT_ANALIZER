@@ -1,4 +1,4 @@
 <?php
-    require("FileService.php");
+    require_once("FileService.php");
     
-    class HTMLService implements FileService {}
+    class HTMLService extends AbstractFileService {}

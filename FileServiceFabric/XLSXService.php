@@ -1,4 +1,4 @@
 <?php
-    require("FileService.php");
+    require_once("FileService.php");
     
-    class XLSXService implements FileService {}
+    class XLSXService extends AbstractFileService {}

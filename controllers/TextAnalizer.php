@@ -1,7 +1,4 @@
 <?php
-    require_once('commonArrayFunction');    
-    require_once('commonTextFunction');    
-
     /**
      * Class that analize text
      */

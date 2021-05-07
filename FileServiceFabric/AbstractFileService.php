@@ -1,5 +1,5 @@
 <?php
-    require("FileService.php");
+    require_once("FileService.php");
 
     class AbstractFileService implements FileService {
         private $file;
@@ -23,7 +23,7 @@
         public function write(String $data):void {
             fwrite($this->file, $data);
         }
-        public function close() {
+        public function close():void {
             fclose($this->file);
         }
     }

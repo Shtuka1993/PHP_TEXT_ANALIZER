@@ -1,4 +1,4 @@
 <?php
-    require("FileService.php");
+    require_once("FileService.php");
     
-    class TXTService implements FileService {}
+    class TXTService extends AbstractFileService {}

@@ -1,4 +1,4 @@
 <?php
-    require("AbstractFileService.php");
+    require_once("AbstractFileService.php");
     
-    class XMLService extends AbstractFileService {}
+    class CSVService extends AbstractFileService {}
