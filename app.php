@@ -1,8 +1,6 @@
 <?php
 namespace app;
 
-use TextAnalizer;
-
 $templateStart = <<<TEMPLATE_START
 <html>
     <head>
