@@ -1,4 +1,5 @@
 <?php
+namespace app;
 
 /**
  * Sort array of strings by length of strings
@@ -71,7 +72,8 @@ function isPalindrome(string $text):bool
 class TextAnalizer
 {
     // Constant with list of separators
-    const LIST_OF_SEPARATORS = [',', ';', '-', ':', '\'', '"', '(', ')', '_', '[', ']', '{', '}', '&', '.', '!', '?', ' '];
+    const LIST_OF_SEPARATORS = [',', ';', '-', ':', '\'', '"', '(', ')', '_', '[', ']', '{',
+        '}', '&', '.', '!', '?', ' '];
     // Constant that store number of items for TOP N
     const TOP_COUNT = 10;
 
@@ -146,7 +148,8 @@ class TextAnalizer
             $result .= 'Number of characters: '.$this->numberOfCharacters.PHP_EOL.PHP_EOL;
             $result .= 'Number of words: '.$this->numberOfWords.PHP_EOL.PHP_EOL;
             $result .= 'Number of sentances: '.$this->numberOfSentances.PHP_EOL.PHP_EOL;
-            $result .= 'Frequency of characters: '.($this->frequencyOfCharacters*100).'%'.PHP_EOL.PHP_EOL; //..
+            $result .= 'Frequency of characters: '.($this->frequencyOfCharacters*100)
+                .'%'.PHP_EOL.PHP_EOL; //..
             $distributionOfCharacters = implode(PHP_EOL, array_map(
                 function ($v, $k) {
                     return $k.':'.$v.'%';
@@ -154,30 +157,49 @@ class TextAnalizer
                 $this->distributionOfCharacters,
                 array_keys($this->distributionOfCharacters)
             ));
-            $result .= 'Distribution of charactes as a percentage of total: '.PHP_EOL.$distributionOfCharacters.PHP_EOL.PHP_EOL;
+            $result .= 'Distribution of charactes as a percentage of total: '.PHP_EOL
+                .$distributionOfCharacters.PHP_EOL.PHP_EOL;
             $result .= 'Average word length: '.$this->avaregeLengthOfWord.PHP_EOL.PHP_EOL;
-            $result .= 'Average number of words in a sentances: '.$this->avaregeNumberOfWordsInSentance.PHP_EOL.PHP_EOL;
+            $result .= 'Average number of words in a sentances: '.$this->avaregeNumberOfWordsInSentance
+                .PHP_EOL.PHP_EOL;
             $top10MostUsedWords =
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByUsage, ((-1)*self::TOP_COUNT)))));
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice(
+                    $this->wordsByUsage,
+                    ((-1)*self::TOP_COUNT)
+                ))));
             $result .=
                 'Top '.self::TOP_COUNT.' most used words: '.PHP_EOL.$top10MostUsedWords.PHP_EOL.PHP_EOL;
             $top10LongestWords =
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByLength, ((-1)*self::TOP_COUNT)))));
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice(
+                    $this->wordsByLength,
+                    ((-1)*self::TOP_COUNT)
+                ))));
             $result .=
                 'Top '.self::TOP_COUNT.' longest words: '.PHP_EOL.$top10LongestWords.PHP_EOL.PHP_EOL;
             $top10ShortestWords =
                 implode(' '.PHP_EOL, array_keys(array_slice($this->wordsByLength, 0, self::TOP_COUNT)));
-            $result .= 'Top '.self::TOP_COUNT.' shortest words: '.PHP_EOL.$top10ShortestWords.PHP_EOL.PHP_EOL;
+            $result .= 'Top '.self::TOP_COUNT.' shortest words: '.PHP_EOL.$top10ShortestWords
+                .PHP_EOL.PHP_EOL;
             $top10LongestSentances =
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->sentancesByLength, ((-1)*self::TOP_COUNT)))));
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice(
+                    $this->sentancesByLength,
+                    ((-1)*self::TOP_COUNT)
+                ))));
             $result .=
-                'Top '.self::TOP_COUNT.' longest sentences: '.PHP_EOL.$top10LongestSentances.PHP_EOL.PHP_EOL;
+                'Top '.self::TOP_COUNT.' longest sentences: '.PHP_EOL.$top10LongestSentances
+                    .PHP_EOL.PHP_EOL;
             $top10ShortestSentances =
-                implode(' '.PHP_EOL, array_keys(array_slice($this->sentancesByLength, 0, self::TOP_COUNT)));
+                implode(' '.PHP_EOL, array_keys(array_slice(
+                    $this->sentancesByLength,
+                    0,
+                    self::TOP_COUNT
+                )));
             $result .=
-                'Top '.self::TOP_COUNT.' shortest sentences: '.PHP_EOL.$top10ShortestSentances.PHP_EOL.PHP_EOL;
+                'Top '.self::TOP_COUNT.' shortest sentences: '.PHP_EOL
+                    .$top10ShortestSentances.PHP_EOL.PHP_EOL;
             $result .= 'Number of palindrome words: '.$this->numberOfPalindromes.PHP_EOL.PHP_EOL;
-            $result .= 'Is the whole text palindrome: '.($this->isTextPalindrome?'YES':'NO').PHP_EOL.PHP_EOL;
+            $result .= 'Is the whole text palindrome: '.($this->isTextPalindrome?'YES':'NO')
+                .PHP_EOL.PHP_EOL;
             $result .= 'Report generated: '.$this->generationDateAndTime.PHP_EOL.PHP_EOL;
             $spendedTime = (microtime(true) - $this->start)*1000;
             $result .= 'Execution time: '.$spendedTime.PHP_EOL.PHP_EOL;
@@ -334,15 +356,6 @@ class TextAnalizer
         $this->numberOfPalindromes = $result;
     }
 }
-    
-    // Text for data
-    //$string = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
-
-    // Analize data
-    //$text = new TextAnalizer($string);
-
-    // Print analized data
-    //echo $text;
 ?>
 
 <html>
