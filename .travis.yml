@@ -2,6 +2,7 @@ language: php
 php:
   - 7.3
 before_script: composer install
-script: ./vendor/bin/phpunit
-        ./vendor/bin/phpcs --ignore=*vendor* --standard=PSR2 .
-        ./vendor/bin/phpmd index.php json  cleancode,codesize,controversial,design,naming,unusedcode
+script: 
+  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpcs --ignore=*vendor* --standard=PSR2 .
+  - ./vendor/bin/phpmd index.php json  cleancode,codesize,controversial,design,naming,unusedcode
