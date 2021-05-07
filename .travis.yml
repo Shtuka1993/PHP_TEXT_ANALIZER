@@ -4,7 +4,7 @@ php:
 before_script: composer install
 script: 
   - ./vendor/bin/phpunit
-  - ./vendor/bin/phpcs --ignore=*vendor* --standard=PSR2 .
+  - ./vendor/bin/phpcs --ignore=*vendor* --standard=PSR2 src
   - ./vendor/bin/phpmd index.php json  cleancode,codesize,controversial,design,naming,unusedcode
   - ./vendor/bin/phpmd src json  cleancode,codesize,controversial,design,naming,unusedcode --ignore-errors-on-exit --ignore-violations-on-exit
   - ./vendor/bin/phpstan analyse src --level=6
