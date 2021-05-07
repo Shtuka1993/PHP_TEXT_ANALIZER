@@ -65,7 +65,7 @@ class TextAnalizer
     // List of sentances sorted by length
     private array $sentancesByLength;
     // Number of palindroms in text
-    private int $numberOfPalindroms;
+    private int $numberOfPalindromes;
     // Is text palindrome
     private bool $isTextPalindrome;
     // Date and time when text analize was done
