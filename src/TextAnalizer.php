@@ -39,7 +39,7 @@ class TextAnalizer
     const TOP_COUNT = 10;
 
     // Time when class was created in micro seconds
-    private int $start;
+    private float $start;
     // Text to be analized
     private string $text;
     // Reversed text
@@ -53,27 +53,39 @@ class TextAnalizer
     // Frequensy of characters in text
     private float $frequencyOfCharacters;
     // Distribution of frequency by characters in persentage
+    /**
+     * @var array<string, int>
+     */
     private array $distributionOfCharacters;
     // Avarege Length of Words in text
     private int $avaregeLengthOfWord;
     // Avarege number of words in sentance
     private int $avaregeNumberOfWordsInSentance;
     // List of words sorted by usage
+    /**
+     * @var array<string, int>
+     */
     private array $wordsByUsage;
     // List of words sorted by length
+    /**
+     * @var array<string, int>
+     */
     private array $wordsByLength;
     // List of sentances sorted by length
+    /**
+     * @var array<string, int>
+     */
     private array $sentancesByLength;
     // Number of palindroms in text
     private int $numberOfPalindromes;
     // Is text palindrome
     private bool $isTextPalindrome;
     // Date and time when text analize was done
-    private $generationDateAndTime;
+    private string $generationDateAndTime;
 
     /**
      * Method for creating of class
-     * @param string text
+     * @param string $text
      */
     public function __construct($text)
     {
@@ -170,7 +182,7 @@ class TextAnalizer
 
     /**
      * Calculate length of UTF-8 string
-     * @param string text
+     * @param string $text
      * @return int
      */
     public static function calculateLength(string $text):int
@@ -180,8 +192,8 @@ class TextAnalizer
 
     /**
      * Generates reversed text
-     * @param string text
-     * @return int
+     * @param string $text
+     * @return string
      */
     public static function generateReversedText(string $text):string
     {
@@ -190,8 +202,8 @@ class TextAnalizer
 
     /**
      * Generate list of words from text. Removes empty.
-     * @param string text
-     * @return array
+     * @param string $text
+     * @return array<int, string>
      */
     public static function generateListOfWords(string $text):array
     {
@@ -200,8 +212,8 @@ class TextAnalizer
 
     /**
      * Generate list of sentense.
-     * @param string text
-     * @return array
+     * @param string $text
+     * @return array<int, string>
      */
     public static function generateListOfSentences(String $text)
     {
@@ -214,42 +226,44 @@ class TextAnalizer
 
     /**
      * Set words by usage
-     * @param array words
+     * @param array<int, string> $words
      */
-    private function setWordsByUsage(array $words)
+    private function setWordsByUsage(array $words):void
     {
         $result = [];
         foreach ($words as $word) {
             $result[$word] = (key_exists($word, $result)) ? $result[$word]+1 : 1;
         }
-        $result = array_filter($result, 'strlen');
+        $result = array_filter($result, function (string $key): bool {
+			return (strlen($key) > 0);
+		});
         asort($result);
         $this->wordsByUsage = $result;
     }
 
     /**
      * Set words by length
-     * @param array words
+     * @param array<int, string> $words
      */
-    private function setWordsByLength(array $words)
+    private function setWordsByLength(array $words):void
     {
         $this->wordsByLength = sortByLength($words);
     }
 
     /**
      * Set sentances by length
-     * @param array sentances
+     * @param array<int, string> $sentances
      */
-    private function setSentancesByLength(array $sentances)
+    private function setSentancesByLength(array $sentances):void
     {
         $this->sentancesByLength = sortByLength($sentances);
     }
 
     /**
      * Set avarege length of words
-     * @param array words
+     * @param array<int, string> $words
      */
-    private function setAvaregeLengthOfWord(array $words)
+    private function setAvaregeLengthOfWord(array $words):void
     {
         $result = 0;
         $items = 0;
@@ -262,9 +276,9 @@ class TextAnalizer
 
     /**
      * Set avarage number of words in sentances
-     * @param array sentances
+     * @param array<int, string> $sentances
      */
-    private function setAvaregeNumberOfWordsInSentances(array $sentances)
+    private function setAvaregeNumberOfWordsInSentances(array $sentances):void
     {
         $result = 0;
         $items = 0;
@@ -277,9 +291,9 @@ class TextAnalizer
 
     /**
      * Calculates distribution of characters
-     * @param string charactersString
+     * @param string $charactersString
      */
-    private function setDistributionOfCharacters(string $charactersString)
+    private function setDistributionOfCharacters(string $charactersString):void
     {
         $characters = str_split($charactersString);
         $result = [];
@@ -296,9 +310,9 @@ class TextAnalizer
 
     /**
     * Calculate number of palindromes
-    * @param array words
+    * @param array<int, string> $words
     */
-    private function setNumberOfPalindromes(array $words)
+    private function setNumberOfPalindromes(array $words):void
     {
         $result = 0;
         foreach ($words as $word) {

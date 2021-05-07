@@ -3,8 +3,8 @@
  * Sort array of strings by length of strings
  * Remove all dublicats
  * Works with UTF-8
- * @param array array
- * @return array
+ * @param array<int, string> $array
+ * @return array<string, int>
  */
 function sortByLength(array $array):array
 {

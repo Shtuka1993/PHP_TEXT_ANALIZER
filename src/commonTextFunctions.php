@@ -1,7 +1,7 @@
 <?php
 /**
  * Check if current string is palindrome
- * @param string text
+ * @param string $text
  * @return bool
  */
 function isPalindrome(string $text):bool
