@@ -235,8 +235,8 @@ class TextAnalizer
             $result[$word] = (key_exists($word, $result)) ? $result[$word]+1 : 1;
         }
         $result = array_filter($result, function (string $key): bool {
-			return (strlen($key) > 0);
-		});
+            return (strlen($key) > 0);
+        });
         asort($result);
         $this->wordsByUsage = $result;
     }
