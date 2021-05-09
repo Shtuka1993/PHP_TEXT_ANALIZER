@@ -24,7 +24,15 @@ var_dump($_FILES);
         echo('<p><pre>');
         $text = stripcslashes($text);
         $text = htmlspecialchars($text);
-        echo new TextAnalizer($text);
+        $analize = new TextAnalizer($text);
+        echo $analize;
+        $data = $analize->prepareExportData();
+        $forCSV = new FileServiceFacade(FileServiceFabric::createCSVService());
+        $forXML = new FileServiceFacade(FileServiceFabric::createXMLService());
+
+        $forCSV->writeData($data, 'downloads/csvExample.csv');
+        $forXML->writeData($data, 'downloads/xmlExample.xml');
+
         echo('</pre><p>');
     }
 ?>

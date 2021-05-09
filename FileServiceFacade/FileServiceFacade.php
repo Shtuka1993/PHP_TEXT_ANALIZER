@@ -15,4 +15,14 @@
 
             return $data;
         }
+
+        public function writeData(array $data, String $filepath):String {
+            $this->service->open($filepath, $this->service::MODIFICATORS['write new']);
+            //foreach($data as $row){
+                $this->service->write($data);
+            //}
+            $this->service->close();
+
+            return $filepath;
+        }
     }

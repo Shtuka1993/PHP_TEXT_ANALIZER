@@ -20,8 +20,8 @@
 
             return $data;
         }
-        public function write(String $data):void {
-            fwrite($this->file, $data);
+        public function write(array $data):void {
+            fwrite($this->file, implode($data));
         }
         public function close():void {
             fclose($this->file);

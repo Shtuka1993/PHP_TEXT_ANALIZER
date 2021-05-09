@@ -116,6 +116,47 @@
                 return $result;
         }
 
+        public function prepareExportData() {
+            $result['TEXT'] = PHP_EOL.$this->text.PHP_EOL.PHP_EOL;
+            $result['REVERSED TEXT'] = PHP_EOL.$this->reversedText.PHP_EOL.PHP_EOL;
+            $result['Number of characters'] = $this->numberOfCharacters.PHP_EOL.PHP_EOL;
+            $result['Number of words'] = $this->numberOfWords.PHP_EOL.PHP_EOL;
+            $result['Number of sentances'] = $this->numberOfSentances.PHP_EOL.PHP_EOL;
+            $result['Frequency of characters'] = ($this->frequencyOfCharacters*100).'%'.PHP_EOL.PHP_EOL; //..
+            $distributionOfCharacters = implode(PHP_EOL, array_map(
+                function ($v, $k) {
+                    return $k.':'.$v.'%';
+                },
+                $this->distributionOfCharacters,
+                array_keys($this->distributionOfCharacters)
+            ));
+            $result['Distribution of charactes as a percentage of total'] = PHP_EOL.$distributionOfCharacters.PHP_EOL.PHP_EOL; 
+            $result['Average word length'] = $this->avaregeLengthOfWord.PHP_EOL.PHP_EOL; 
+            $result['Average number of words in a sentances'] = $this->avaregeNumberOfWordsInSentance.PHP_EOL.PHP_EOL; 
+            $top10MostUsedWords = 
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByUsage, ((-1)*self::TOP_COUNT)))));
+            $result['Top '.self::TOP_COUNT.' most used words'] = PHP_EOL.$top10MostUsedWords.PHP_EOL.PHP_EOL;
+            $top10LongestWords = 
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByLength, ((-1)*self::TOP_COUNT)))));
+            $result['Top '.self::TOP_COUNT.' longest words'] = PHP_EOL.$top10LongestWords.PHP_EOL.PHP_EOL;
+            $top10ShortestWords = 
+                implode(' '.PHP_EOL, array_keys(array_slice($this->wordsByLength, 0, self::TOP_COUNT)));
+            $result['Top '.self::TOP_COUNT.' shortest words'] = PHP_EOL.$top10ShortestWords.PHP_EOL.PHP_EOL;
+            $top10LongestSentances = 
+                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->sentancesByLength, ((-1)*self::TOP_COUNT)))));
+            $result['Top '.self::TOP_COUNT.' longest sentences'] = PHP_EOL.$top10LongestSentances.PHP_EOL.PHP_EOL;
+            $top10ShortestSentances = 
+                implode(' '.PHP_EOL,array_keys(array_slice($this->sentancesByLength, 0, self::TOP_COUNT)));
+            $result['Top '.self::TOP_COUNT.' shortest sentences'] = PHP_EOL.$top10ShortestSentances.PHP_EOL.PHP_EOL;
+            $result['Number of palindrome words'] = $this->numberOfPalindromes.PHP_EOL.PHP_EOL;
+            $result['Is the whole text palindrome'] = ($this->isTextPalindrome?'YES':'NO').PHP_EOL.PHP_EOL;
+            $result['Report generated'] = $this->generationDateAndTime.PHP_EOL.PHP_EOL;
+            $spendedTime = (microtime(true) - $this->start)*1000;
+            $result['Execution time'] = $spendedTime.PHP_EOL.PHP_EOL;
+
+            return $result;
+        }
+
         /**
          * Calculate length of UTF-8 string
          * @param string text
@@ -131,7 +172,7 @@
          * @return int
          */
         public static function generateReversedText(string $text):string {
-            return strrev($text);
+            return mb_strrev($text);
         }
 
         /**
