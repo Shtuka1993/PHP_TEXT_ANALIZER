@@ -5,4 +5,5 @@ $db = new PDO('mysql:host=localhost;dbname=pdo', 'root', 'password');
     const DB_NAME = "info";
     const DB_USER = "db";
     const DB_PASS = "password";
+    const DB_DATA_TABLE_NAME = "data";
 ?>
