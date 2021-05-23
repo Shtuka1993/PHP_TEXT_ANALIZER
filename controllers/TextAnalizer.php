@@ -8,6 +8,8 @@
         // Constant that store number of items for TOP N
         const TOP_COUNT = 10;
 
+        //Hash
+        private $hash;
         // Time when class was created in micro seconds
         private int $start;
         // Text to be analized
@@ -49,6 +51,7 @@
             $this->start = microtime(true);
             $this->generationDateAndTime = date('Y-m-d H:i');
             $this->text = $text;
+            $this->hash = sha256($text);
             $this->reversedText = self::generateReversedText($text);
             $this->numberOfCharacters = self::calculateLength($text);
             $words = self::generateListOfWords($text);
@@ -117,42 +120,18 @@
         }
 
         public function prepareExportData() {
-            $result['TEXT'] = PHP_EOL.$this->text.PHP_EOL.PHP_EOL;
-            $result['REVERSED TEXT'] = PHP_EOL.$this->reversedText.PHP_EOL.PHP_EOL;
-            $result['Number of characters'] = $this->numberOfCharacters.PHP_EOL.PHP_EOL;
-            $result['Number of words'] = $this->numberOfWords.PHP_EOL.PHP_EOL;
-            $result['Number of sentances'] = $this->numberOfSentances.PHP_EOL.PHP_EOL;
-            $result['Frequency of characters'] = ($this->frequencyOfCharacters*100).'%'.PHP_EOL.PHP_EOL; //..
-            $distributionOfCharacters = implode(PHP_EOL, array_map(
-                function ($v, $k) {
-                    return $k.':'.$v.'%';
-                },
-                $this->distributionOfCharacters,
-                array_keys($this->distributionOfCharacters)
-            ));
-            $result['Distribution of charactes as a percentage of total'] = PHP_EOL.$distributionOfCharacters.PHP_EOL.PHP_EOL; 
-            $result['Average word length'] = $this->avaregeLengthOfWord.PHP_EOL.PHP_EOL; 
-            $result['Average number of words in a sentances'] = $this->avaregeNumberOfWordsInSentance.PHP_EOL.PHP_EOL; 
-            $top10MostUsedWords = 
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByUsage, ((-1)*self::TOP_COUNT)))));
-            $result['Top '.self::TOP_COUNT.' most used words'] = PHP_EOL.$top10MostUsedWords.PHP_EOL.PHP_EOL;
-            $top10LongestWords = 
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->wordsByLength, ((-1)*self::TOP_COUNT)))));
-            $result['Top '.self::TOP_COUNT.' longest words'] = PHP_EOL.$top10LongestWords.PHP_EOL.PHP_EOL;
-            $top10ShortestWords = 
-                implode(' '.PHP_EOL, array_keys(array_slice($this->wordsByLength, 0, self::TOP_COUNT)));
-            $result['Top '.self::TOP_COUNT.' shortest words'] = PHP_EOL.$top10ShortestWords.PHP_EOL.PHP_EOL;
-            $top10LongestSentances = 
-                implode(' '.PHP_EOL, array_reverse(array_keys(array_slice($this->sentancesByLength, ((-1)*self::TOP_COUNT)))));
-            $result['Top '.self::TOP_COUNT.' longest sentences'] = PHP_EOL.$top10LongestSentances.PHP_EOL.PHP_EOL;
-            $top10ShortestSentances = 
-                implode(' '.PHP_EOL,array_keys(array_slice($this->sentancesByLength, 0, self::TOP_COUNT)));
-            $result['Top '.self::TOP_COUNT.' shortest sentences'] = PHP_EOL.$top10ShortestSentances.PHP_EOL.PHP_EOL;
-            $result['Number of palindrome words'] = $this->numberOfPalindromes.PHP_EOL.PHP_EOL;
-            $result['Is the whole text palindrome'] = ($this->isTextPalindrome?'YES':'NO').PHP_EOL.PHP_EOL;
-            $result['Report generated'] = $this->generationDateAndTime.PHP_EOL.PHP_EOL;
+            $result['Text'] = $this->text;
+            $result['hash'] = $this->hash;
+            $result['Number of characters'] = $this->numberOfCharacters;
+            $result['Number of words'] = $this->numberOfWords;
+            $result['Number of sentances'] = $this->numberOfSentances;
+            $result['Average word length'] = $this->avaregeLengthOfWord; 
+            $result['Average number of words in a sentances'] = $this->avaregeNumberOfWordsInSentance; 
+            $result['Number of palindrome words'] = $this->numberOfPalindromes;
+            $result['Is the whole text palindrome'] = ($this->isTextPalindrome?'YES':'NO');
+            $result['Report generated'] = $this->generationDateAndTime;
             $spendedTime = (microtime(true) - $this->start)*1000;
-            $result['Execution time'] = $spendedTime.PHP_EOL.PHP_EOL;
+            $result['Execution time'] = $spendedTime;
 
             return $result;
         }
