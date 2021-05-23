@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "shuchkin/simplexlsxgen": "^1.0"
     }
 }
